@@ -3,8 +3,6 @@ package pkg4x4_2048;
 
 import java.util.Scanner;
 import java.io.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class HighScoresRecord {
 
@@ -18,34 +16,52 @@ public class HighScoresRecord {
             //
             System.out.println("HIGH SCORES");
             
+            
             Scanner sc = new Scanner(new File("High_Scores.txt"));
-            String scr = sc.nextLine();
-            int allScores[] = new int[5];
-            int c = 0;
-
-            while(sc.hasNextInt()){
-                allScores[c] = Integer.getInteger(sc.nextLine());
-                c++;
+            LineNumberReader rd = new LineNumberReader(new FileReader("High_Scores.txt"));
+            
+            int size;
+            String read = "";
+            while((read = rd.readLine())!= null){
                 
             }
-//            for(int pass = 1; pass < allScores.length; pass++){
-//                for(int i = 0; i < allScores.length - pass; i++){
-//                    if(allScores[i] < allScores[i+1]){
-//                        int hold = allScores[i];
-//                        allScores[i] = allScores[i+1];
-//                        allScores[i+1] = hold;
-//                    }
-//                }
-//            }
-//            int rank = 1;
-//            for(int x = 0; x < 5; x++){
-//                System.out.println((rank)+". "+allScores[x]);
-//                rank++;
-//            }
+            int line = rd.getLineNumber();
+            size = rd.getLineNumber();
+            //using BufferedReader
+//            BufferedReader bf = new BufferedReader(new FileReader("High_Scores.txt"));
+//            
+//            System.out.println(bf.readLine());
+//            System.out.println(bf.readLine());
+            System.out.println("Number of lines is "+line);//ok
+            System.out.println("Length of array "+size+"\n"); //ok
+            int allScores[] = new int[size];
+            String Scores[] = new String[size];
+           
+            for(int x = 0; x < Scores.length; x++){
+                Scores[x] = sc.nextLine();
+            }
+            
+            for(int i = 0; i < size; i++){
+                System.out.println(Scores[i]);
+            }
+            for(int y = 0; y < Scores.length; y++){
+                allScores[y] = Integer.parseInt(Scores[y]);
+            }
+            for(int pass = 1; pass < allScores.length; pass++){
+                for(int i = 0; i < allScores.length - pass; i++){
+                    if(allScores[i] < allScores[i+1]){
+                        int hold = allScores[i];
+                        allScores[i] = allScores[i+1];
+                        allScores[i+1] = hold;
+                    }
+                }
+            }
+            for(int i = 0; i < allScores.length; i++){
+                System.out.println(allScores[i]);
+            }
             
             
-            
-            System.out.println("Press any +ve number to start");
+            System.out.println("\nPress any +ve number to start");
             confirm = in.nextInt();
             System.out.println("");
             
@@ -63,15 +79,25 @@ public class HighScoresRecord {
             
            
             BufferedWriter wr = new BufferedWriter(new FileWriter("High_Scores.txt",true));
+            //wr.append('\n');
             wr.write(String.valueOf(TotalScore));
-            wr.append('\n');
+            wr.newLine();
             wr.close();
             
-        }catch (IOException e){
-            //Logger.getLogger(HighScoresRecord.class.getName()).log(Level.SEVERE, null, ex);
-        }catch (NumberFormatException e){
-            
+        }catch (IOException | NumberFormatException e){
+            System.out.println("Stupid problem");
         }
+        //            for(int pass = 1; pass < allScores.length; pass++){
+//                for(int i = 0; i < allScores.length - pass; i++){
+//                    if(allScores[i] < allScores[i+1]){
+//                        int hold = allScores[i];
+//                        allScores[i] = allScores[i+1];
+//                        allScores[i+1] = hold;
+//                    }
+//                }
+//            }
+        
+ 
     }
     
 }
