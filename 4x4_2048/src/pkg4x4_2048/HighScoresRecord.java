@@ -44,8 +44,8 @@ public class HighScoresRecord {
             for(int i = 0; i < size; i++){
                 System.out.println(Scores[i]);
             }
-            for(int y = 0; y < Scores.length; y++){
-                allScores[y] = Integer.parseInt(Scores[y]);
+            for(int y = 0; y < size; y++){
+                int test = Integer.parseInt(Scores[y]);
             }
             for(int pass = 1; pass < allScores.length; pass++){
                 for(int i = 0; i < allScores.length - pass; i++){
@@ -85,7 +85,7 @@ public class HighScoresRecord {
             wr.close();
             
         }catch (IOException | NumberFormatException e){
-            System.out.println("Stupid problem");
+            System.out.println("\nStupid NumberFormatException problem");
         }
         //            for(int pass = 1; pass < allScores.length; pass++){
 //                for(int i = 0; i < allScores.length - pass; i++){
