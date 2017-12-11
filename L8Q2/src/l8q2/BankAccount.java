@@ -20,11 +20,13 @@ public class BankAccount {
     
     public void deposit(double amount){
         balance =  balance + amount;
+        System.out.printf("You've deposited RM %.2f\n",amount);
     }
     public void withdraw(double amount){
         balance = balance - amount;
+        System.out.printf("You've withdrew RM %.2f\n",amount);
     }
     public void getBalance(){
-        System.out.println("Your balance is "+balance);
+        System.out.printf("Your balance is RM %.2f\n",balance);
     }
 }
