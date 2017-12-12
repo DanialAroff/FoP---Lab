@@ -26,8 +26,8 @@ public class HighScoresRecord {
             
             int line = rd.getLineNumber();
             size = rd.getLineNumber();
-            int allScores[] = new int[size];
-            String Scores[] = new String[size];
+            int allScores[] = new int[size];    //
+            String Scores[] = new String[size]; //
            
             for(int x = 0; x < Scores.length; x++){
                 Scores[x] = sc.nextLine();
@@ -76,12 +76,11 @@ public class HighScoresRecord {
                 }
             }
             //
-           
-            //to print score
-            BufferedWriter wr = new BufferedWriter(new FileWriter("High_Scores.txt",true));
-            wr.write(String.valueOf(TotalScore));
-            wr.newLine();
-            wr.close();
+            try ( //to print score
+                    BufferedWriter wr = new BufferedWriter(new FileWriter("High_Scores.txt",true))) {
+                wr.write(String.valueOf(TotalScore));
+                wr.newLine();
+            }
             
         }catch (IOException | NumberFormatException e){
             System.out.println("\nNumberFormatException");
