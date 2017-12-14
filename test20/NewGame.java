@@ -75,27 +75,28 @@ public class NewGame {
             for(int j = 0; j < gameBoard[0].length; j++){
                 int addOrNot = rand.nextInt();
                 if(added < 1){
-                    if(Character.isLetter(gameBoard[i][j])){                        
+                    if(Character.isLetter(g[i][j])){                        
                     }
                     else{
                         if(addOrNot%3==0){
-                            gameBoard[i][j] = 'A';
+                            g[i][j] = 'A';
                             added++;
                         }
                         else{
-                            gameBoard[i][j] = '-';
+                            g[i][j] = '-';
                         }
                     }   
                 }
                 else if(added>=1){
-                    if(Character.isLetter(gameBoard[i][j])){
+                    if(Character.isLetter(g[i][j])){
                     }
                     else{
-                        gameBoard[i][j] = '-';
+                        g[i][j] = '-';
                     }   
                 }
             }
         }    
+        gameBoard = g;
     }
     public boolean checkAvailableMoves(char av[][]){
           int UP = 0;
@@ -151,7 +152,8 @@ public class NewGame {
         return UP!=0 || DOWN!=0 || RIGHT!=0 || LEFT!=0;
     }
     public void moveUP(){
-//        char[][]hold = gameBoardX;
+        char[][]hold = gameBoard;
+        
         char temp;
         int length = gameBoard.length;
         for(int i = 1; i < gameBoard.length; i++){
@@ -183,6 +185,14 @@ public class NewGame {
                     }      
                 }
             }
+        }
+        System.out.println("---");
+        display(hold);
+        System.out.println("");
+        display(gameBoard);
+        System.out.println("---");
+        if(Arrays.equals(gameBoard, hold)){
+            addTiles(gameBoard);
         }
         for(int i = 0; i < gameBoard.length; i++){
             for(int j = 0; j < gameBoard[0].length; j++){
