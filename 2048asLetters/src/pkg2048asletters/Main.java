@@ -1,19 +1,21 @@
 
-package test20;
+package pkg2048asletters;
 
 import java.io.IOException;
 import java.util.Scanner;
 
-public class Test20 {
+public class Main {
 
- 
     public static void main(String[] args) throws IOException {
-       
-        NewGame g = new NewGame();
+        Game2048 g = new Game2048();
         Scanner game = new Scanner(System.in);
         
         g.createFile();
         g.displayHighScore();
+        
+//        System.out.print("Player name : ");
+//        String name = game.nextLine();
+//        
         System.out.print("\nEnter the number of rows : ");
         int row = game.nextInt();
         System.out.print("Enter the number of columns : ");
@@ -102,4 +104,5 @@ public class Test20 {
         }
         
     }    
+    
 }

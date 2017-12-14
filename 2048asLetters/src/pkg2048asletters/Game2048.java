@@ -1,5 +1,5 @@
 
-package test20;
+package pkg2048asletters;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,8 +11,7 @@ import java.io.LineNumberReader;
 import java.util.Random;
 import java.util.Scanner;
 
-public class NewGame {
-    
+public class Game2048 {
     private int numOfLetters;    
     private char[][] gameBoard;  //
     private char[][] gameBoardX; //hold previous tiles position. used for UNDO
@@ -22,7 +21,7 @@ public class NewGame {
     private int totalScore;
     private int[] cScores;    //array of scores in integer
     private String[] Scores;  //array of scores in String
-    
+    private String name;
     
     public void newGame(int row, int column){
         Random rnd = new Random();
@@ -420,7 +419,6 @@ public class NewGame {
         }
         return false;
     }
-    
     public void display(char [][]d){
         for(int i = 0; i < d.length; i++){
             for(int j = 0; j < d[0].length; j++){
@@ -429,6 +427,9 @@ public class NewGame {
             System.out.println("");
         }
     }
+//    public void setName(String name){
+//        this.name = name;
+//    }
     //check if "High_Scores.txt" exist or not and if not new file will be created
     public void createFile(){
         try{
@@ -514,9 +515,9 @@ public class NewGame {
     // to print score
     public void writeScore() throws IOException{
         try (BufferedWriter wr = new BufferedWriter(new FileWriter("High_Scores.txt",true))) {
-                wr.write(String.valueOf(totalScore));
-                wr.newLine();
-            }
+            //wr.write(name+" ");    
+            wr.write(String.valueOf(totalScore));                
+            wr.newLine();
+        }
     }
 }
-

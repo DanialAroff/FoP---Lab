@@ -6,13 +6,25 @@ import java.util.Scanner;
 
 public class Scores {
     
-    private int score;
-    private int totalScore;
-    private int[] cScores;    //array of scores in integer
-    private String[] Scores;  //array of scores in String
+    protected int score;
+    protected int totalScore;
+    protected int[] cScores;    //array of scores in integer
+    protected String[] Scores;  //array of scores in String
     
     public Scores(){
         totalScore = 0;       
+    }
+    
+    public void createFile(){
+        try{
+            File f = new File("High_Scores.txt");
+            if(f.isFile()){}
+            else{
+                f.createNewFile();
+            }
+        }catch(IOException e){
+            System.out.println("Problem with output");
+        }
     }
     
     public void displayHighScore() throws FileNotFoundException, IOException{
@@ -68,9 +80,21 @@ public class Scores {
     public void addScore(int score){
         totalScore = totalScore + score;
     }
+    public int combinedScore(char merged){
+        int mark = 0;
+        int s[] = {2,3,4,5,6,7,8,9,10,11};
+        char letters[] = {'B','C','D','E','F','G','H','I','J','K'};
+        for(int x = 0; x < letters.length; x++){
+            if(merged == letters[x]){
+                mark = x;
+                break;
+            }
+        }
+        return s[mark];
+    }
     //displaying score
     public void displayTotalScore(){
-        System.out.println(totalScore);
+        System.out.println("Scores : "+totalScore);
     }
     // to print score
     public void writeScore() throws IOException{
@@ -79,4 +103,5 @@ public class Scores {
                 wr.newLine();
             }
     }
+    
 }
