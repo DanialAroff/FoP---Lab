@@ -21,10 +21,10 @@ public class NewGame {
         numOfLetters = (row * column) / 8;
         int randomTiles[] = new int[numOfLetters];
         gameBoard = new char[row][column];
+        gameBoardX = new char[row][column];
         
         for (int p = 0; p < numOfLetters; p++) {
             randomTiles[p] = rnd.nextInt(row * column);
-
         }
         
         for (int pass = 1; pass < randomTiles.length; pass++) {
@@ -35,7 +35,6 @@ public class NewGame {
                     randomTiles[j] = randomTiles[j+1];
                     randomTiles[j+1] = temp;
                 }
-
             }
         }
         int fill = 0;
@@ -64,20 +63,29 @@ public class NewGame {
     public char[][]gameBoard(){
         return gameBoard;
     }
-    public void recordPrevious(char previous[][]){
-        gameBoardX = previous;
+    public void record(char X[][]){
+        for(int x = 0; x < X.length; x++){
+            for(int y = 0; y < X[0].length; y++){
+                gameBoardX[x][y] = X[x][y];
+            }
+        }
     }
-    public void undoBoard(){
+    public void undo(){
         if(undo == 1){
-            undo = 0;
             display(gameBoardX);
+            undo = 0;
+            for(int x = 0; x < gameBoardX.length; x++){
+                for(int y = 0; y < gameBoardX[0].length; y++){
+                    gameBoard[x][y] = gameBoardX[x][y];
+                }
+            }
         }
         else{
             display(gameBoard);
             System.out.println("Can't undo");
         }
     }
-    public char[][] addTiles(){        
+    public void addTiles(){        
         Random rand = new Random();
         int added = 0;
         for(int i = 0; i < gameBoard.length; i++){
@@ -105,7 +113,6 @@ public class NewGame {
                 }
             }
         }    
-        return gameBoard;
     }
     public boolean checkAvailableMoves(char av[][]){
         int UP = 0;

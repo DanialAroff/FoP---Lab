@@ -1,5 +1,5 @@
 
-package pkg4x4_2048;
+package test20;
 
 import java.io.*;
 import java.util.Scanner;
@@ -79,5 +79,4 @@ public class Scores {
                 wr.newLine();
             }
     }
-    
 }
