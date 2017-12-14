@@ -1,7 +1,6 @@
 
 package test20;
 
-import java.util.Arrays;
 import java.util.Random;
 
 public class NewGame {
@@ -9,7 +8,9 @@ public class NewGame {
     private int numOfLetters;    
     private char[][] gameBoard;  //
     private char[][] gameBoardX; //hold previous tiles position. used for UNDO
-    //private 
+    private int undo; 
+    private int score;
+    private int totalScore;
     
     public NewGame(){
         
@@ -59,13 +60,22 @@ public class NewGame {
             }
             System.out.println("");
         }
-        gameBoardX = gameBoard;
     }
-    public char[][] gameBoard(){
+    public char[][]gameBoard(){
         return gameBoard;
     }
-    public char[][] gameBoardX(){
-        return gameBoardX;
+    public void recordPrevious(char previous[][]){
+        gameBoardX = previous;
+    }
+    public void undoBoard(){
+        if(undo == 1){
+            undo = 0;
+            display(gameBoardX);
+        }
+        else{
+            display(gameBoard);
+            System.out.println("Can't undo");
+        }
     }
     public char[][] addTiles(){        
         Random rand = new Random();
@@ -95,20 +105,17 @@ public class NewGame {
                 }
             }
         }    
-        //gameBoard = addTile;
         return gameBoard;
     }
     public boolean checkAvailableMoves(char av[][]){
-          int UP = 0;
-          int DOWN = 0;
-          int RIGHT = 0;
-          int LEFT = 0;
-          
-          char temp;
+        int UP = 0;
+        int DOWN = 0;
+        int RIGHT = 0;
+        int LEFT = 0;
         //UP
         for(int x = 1; x < av.length; x++){
             for(int y = 0; y < av[0].length; y++){
-                if(av[x-1][y] == '-'){
+                if(av[x-1][y] == '-'&&Character.isUpperCase(av[x][y])){
                     UP += 1;
                 }
                 else if(av[x-1][y] == av[x][y] && Character.isLetter(av[x][y])){
@@ -119,7 +126,7 @@ public class NewGame {
         //DOWN
         for(int x = av.length-2; x >= 0; x--){
             for(int y = 0; y < av[0].length; y++){
-                if(av[x+1][y] == '-'){
+                if(av[x+1][y] == '-'&&Character.isUpperCase(av[x][y])){
                     DOWN += 1;
                 }
                 else if(av[x+1][y] == av[x][y] && Character.isLetter(av[x][y])){
@@ -130,19 +137,18 @@ public class NewGame {
         //LEFT
         for(int x = 0; x < av.length; x++){
             for(int y = 1 ; y < av[0].length; y++){
-                if(av[x][y-1] == '-'){
+                if(av[x][y-1] == '-'&&Character.isUpperCase(av[x][y])){
                     LEFT += 1;
                 }
                 else if(av[x][y-1] == av[x][y] && Character.isLetter(av[x][y])){
-                    UP += 1;
+                    LEFT += 1;
                 }
             }
         }
-
         //RIGHT
         for(int x = 0; x < av.length; x++){
             for(int y = av[0].length - 2; y >=0; y--){
-                if(av[x][y+1] == '-'){
+                if(av[x][y+1] == '-'&&Character.isUpperCase(av[x][y])){
                     RIGHT += 1;
                 }
                 else if(av[x][y+1] == av[x][y] && Character.isLetter(av[x][y])){
@@ -152,9 +158,63 @@ public class NewGame {
         }
         return UP!=0 || DOWN!=0 || RIGHT!=0 || LEFT!=0;
     }
-    public void moveUP(char arr[][]){
-        gameBoard = arr;
-        char[][]hold = arr;
+    public int ifUP(char av[][]){
+        int UP = 0;
+         for(int x = 1; x < av.length; x++){
+            for(int y = 0; y < av[0].length; y++){
+                if(av[x-1][y] == '-'&&Character.isUpperCase(av[x][y])){
+                    UP += 1;
+                }
+                else if(av[x-1][y] == av[x][y] && Character.isLetter(av[x][y])){
+                    UP += 1;
+                }
+            }
+        }
+        return UP;
+    }
+    public int ifDOWN(char av[][]){
+        int DOWN = 0;
+        for(int x = av.length-2; x >= 0; x--){
+            for(int y = 0; y < av[0].length; y++){
+                if(av[x+1][y] == '-'&&Character.isUpperCase(av[x][y])){
+                    DOWN += 1;
+                }
+                else if(av[x+1][y] == av[x][y] && Character.isLetter(av[x][y])){
+                    DOWN += 1;
+                }
+            }
+        }
+        return DOWN;
+    }
+    public int ifLEFT(char av[][]){
+        int LEFT = 0;
+        for(int x = 0; x < av.length; x++){
+            for(int y = 1 ; y < av[0].length; y++){
+                if(av[x][y-1] == '-'&&Character.isUpperCase(av[x][y])){
+                    LEFT += 1;
+                }
+                else if(av[x][y-1] == av[x][y] && Character.isLetter(av[x][y])){
+                    LEFT += 1;
+                }
+            }
+        }
+        return LEFT;
+    }
+    public int ifRIGHT(char av[][]){
+        int RIGHT = 0;
+        for(int x = 0; x < av.length; x++){
+            for(int y = av[0].length - 2; y >=0; y--){
+                if(av[x][y+1] == '-'&&Character.isUpperCase(av[x][y])){
+                    RIGHT += 1;
+                }
+                else if(av[x][y+1] == av[x][y] && Character.isLetter(av[x][y])){
+                    RIGHT += 1;
+                }
+            }
+        }
+        return RIGHT;
+    }
+    public void moveUP(){
         char temp;
         int length = gameBoard.length;
         for(int i = 1; i < gameBoard.length; i++){
@@ -187,74 +247,51 @@ public class NewGame {
                 }
             }
         }
-        if(Arrays.equals(gameBoard, hold)){
-            //addTiles();
-        }
-        else{
-            addTiles();
-        }
-        for(int i = 0; i < gameBoard.length; i++){
-            for(int j = 0; j < gameBoard[0].length; j++){
-                System.out.print(gameBoard[i][j]+" ");
-            }
-            System.out.println("");
-        }
-        gameBoardX = gameBoard;
+        addTiles();
+        display(gameBoard);
+        undo = 1;
     }
     
-    //RIGHT NOT YET COMPLETED
-    public void moveDOWN(char arr[][]){
-        gameBoard = arr;
-        char[][]hold = arr;
+    public void moveDOWN(){
+        char down[][] = gameBoard;
         char temp;
         int length = gameBoard.length;
         for(int i = length-2; i >=0; i--){
             for(int j = 0; j < gameBoard[0].length; j++){
-                if(gameBoard[i][j] == '-'){
+                if(down[i][j] == '-'){
                     //
                 }
-                else if(gameBoard[i][j] == gameBoard[i+1][j]&&Character.isUpperCase(gameBoard[i][j])){
-                    gameBoard[i][j] = nextLetter(gameBoard[i][j]);
-                    temp = gameBoard[i][j];
-                    gameBoard[i][j] = '-';
-                    gameBoard[i+1][j] = temp;
+                else if(down[i][j] == down[i+1][j]&&Character.isUpperCase(down[i][j])){
+                    down[i][j] = nextLetter(down[i][j]);
+                    temp = down[i][j];
+                    down[i][j] = '-';
+                    down[i+1][j] = temp;
                 }             
-                else if(gameBoard[i+1][j] == '-'&&Character.isUpperCase(gameBoard[i][j])){             
+                else if(down[i+1][j] == '-'&&Character.isUpperCase(down[i][j])){             
                     int check;
                     for(check = i; check < length-1; check++){
-                    if(gameBoard[check+1][j]=='-'){
-                            gameBoard[check+1][j] = gameBoard[check][j];
-                            gameBoard[check][j]= '-';
+                    if(down[check+1][j]=='-'){
+                            down[check+1][j] = down[check][j];
+                            down[check][j]= '-';
                         }
-                        else if(gameBoard[check+1][j]== gameBoard[check][j]){
-                            gameBoard[check+1][j] = nextLetter(gameBoard[check][j]);
-                            gameBoard[check][j] = '-';
+                        else if(down[check+1][j] == down[check][j]){
+                            down[check+1][j] = nextLetter(down[check][j]);
+                            down[check][j] = '-';
                             break;
                         }    
-                        else if(gameBoard[check+1][j]!=gameBoard[check][j]&&Character.isUpperCase(gameBoard[check+1][j])){
+                        else if(down[check+1][j]!=down[check][j]&&Character.isUpperCase(down[check+1][j])){
                             break;
                         }
                     }
                 }
             }
         }
-        if(Arrays.equals(gameBoard, hold)){
-            //addTiles();
-        }
-        else{
-            addTiles();
-        }
-        for(int i = 0; i < gameBoard.length; i++){
-            for(int j = 0; j < gameBoard[0].length; j++){
-                System.out.print(gameBoard[i][j]+" ");
-            }
-            System.out.println("");
-        }
-        gameBoardX = gameBoard;
+        addTiles();
+        display(down);
+        gameBoard = down;
+        undo = 1;
     }
-    public void moveLEFT(char arr[][]){
-        gameBoard = arr;
-        char[][]hold =arr;
+    public void moveLEFT(){
         char temp;
         int length = gameBoard.length;
         for(int i = 0; i < length; i++){
@@ -287,23 +324,11 @@ public class NewGame {
                 }
             }
         }
-        if(Arrays.equals(gameBoard, hold)){
-            //addTiles();
-        }
-        else{
-            addTiles();
-        }
-        for(int i = 0; i < gameBoard.length; i++){
-            for(int j = 0; j < gameBoard[0].length; j++){
-                System.out.print(gameBoard[i][j]+" ");
-            }
-            System.out.println("");
-        }
-        gameBoardX = gameBoard;
+        addTiles();
+        display(gameBoard);
+        undo = 1;
     }
-    public void moveRIGHT(char arr[][]){
-        gameBoard = arr;
-        char[][]hold = arr;
+    public void moveRIGHT(){
         char temp;
         int length = gameBoard.length;
         for(int i = 0; i < length; i++){
@@ -336,19 +361,9 @@ public class NewGame {
                 }
             }
         }
-        if(Arrays.equals(gameBoard, hold)){
-            //addTiles();
-        }
-        else{
-            addTiles();
-        }
-        for(int i = 0; i < gameBoard.length; i++){
-            for(int j = 0; j < gameBoard[0].length; j++){
-                System.out.print(gameBoard[i][j]+" ");
-            }
-            System.out.println("");
-        }
-        gameBoardX = gameBoard;
+        addTiles();
+        display(gameBoard);
+        undo = 1;
     }
     public char nextLetter(char p){
         char letters[] = {'A','B','C','D','E','F','G','H','I','J','K'};
@@ -363,7 +378,6 @@ public class NewGame {
     }
     
     public void display(char [][]d){
-       // d = gameBoard;
         for(int i = 0; i < d.length; i++){
             for(int j = 0; j < d[0].length; j++){
                 System.out.print(d[i][j]+" ");

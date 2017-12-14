@@ -8,7 +8,6 @@ public class Test20 {
 
  
     public static void main(String[] args) {
-        Testing t = new Testing();
        
         NewGame g = new NewGame();
         moveUpdated move = new moveUpdated();
@@ -21,33 +20,56 @@ public class Test20 {
         System.out.println("");
         g.newGame(row, column);
         char [][]gameBoard = g.gameBoard();
-//        System.out.println("First");
-//        g.display(gameBoard);
-        
+
         while(g.checkAvailableMoves(gameBoard)){
-//            System.out.println("Second");
-//            g.display(gameBoard);
             System.out.println("");
-            System.out.println("UP : 1   RIGHT : 2   DOWN : 3   LEFT : 4");
+            System.out.println("UP : 1   RIGHT : 2   DOWN : 3   LEFT : 4   UNDO : 5");
             System.out.print("Direction ");
             int direction = game.nextInt();
             
             switch(direction){
                 case 1 : {
-                    g.moveUP(g.gameBoard());
+                    if(g.ifUP(gameBoard)>0){
+                        g.recordPrevious(gameBoard);
+                        g.moveUP();
+                    }
+                    else{
+                        g.display(gameBoard);
+                    }
                     break;
                 }
                 case 2 : {
-                    g.moveRIGHT(g.gameBoard());
+                    if(g.ifRIGHT(gameBoard)>0){
+                        g.recordPrevious(gameBoard);
+                        g.moveRIGHT();
+                    }
+                    else{
+                        g.display(gameBoard);           
+                    }                    
                     break;
                 }
                 case 3 : {
-                    g.moveDOWN(g.gameBoard());
+                    if(g.ifDOWN(gameBoard)>0){
+                        g.recordPrevious(gameBoard);
+                        g.moveDOWN();
+                    }    
+                    else{
+                        g.display(gameBoard);
+                    }
                     break;
                 }
                 case 4 : {
-                    g.moveLEFT(g.gameBoard());
+                    if(g.ifLEFT(gameBoard)>0){
+                        g.recordPrevious(gameBoard);
+                        g.moveLEFT();               
+                    }    
+                    else{
+                        g.display(gameBoard);
+                    }
                     break;
+                }
+                case 5 : {
+                    g.undoBoard();
                 }
                 default : {
                     
