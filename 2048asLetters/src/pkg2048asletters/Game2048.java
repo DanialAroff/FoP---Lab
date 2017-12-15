@@ -21,7 +21,9 @@ public class Game2048 {
     private int totalScore;
     private int[] cScores;    //array of scores in integer
     private String[] Scores;  //array of scores in String
-    private String name;
+    private String[]Names;
+    private String[] cNames;  //array of names
+    private String playerName;
     
     public void newGame(int row, int column){
         Random rnd = new Random();
@@ -412,7 +414,7 @@ public class Game2048 {
     public boolean win(){
         for(int x = 0; x < gameBoard.length; x++){
             for(int y = 0; y < gameBoard[0].length; y++){
-                if(gameBoard[x][y] == 'E'){
+                if(gameBoard[x][y] == 'K'){
                     return true;
                 }
             }
@@ -427,9 +429,9 @@ public class Game2048 {
             System.out.println("");
         }
     }
-//    public void setName(String name){
-//        this.name = name;
-//    }
+    public void setName(String name){
+        playerName = name;
+    }
     //check if "High_Scores.txt" exist or not and if not new file will be created
     public void createFile(){
         try{
@@ -460,14 +462,21 @@ public class Game2048 {
         length = rd.getLineNumber();
         cScores = new int[length];   
         Scores  = new String[length];
+        cNames = new String[length];
+        Names = new String[length];
 
         for(int x = 0; x < Scores.length; x++){
-            Scores[x] = sc.nextLine();
+            Names[x] = sc.next();
+            Scores[x] = sc.next();
         }
         for(int y = 0; y < length; y++){
             String value = Scores[y].replaceAll("[^0-9]", ""); //untuk buang semua character lain yg bukan integer dlm String tu
             cScores[y] = Integer.parseInt(value);              //convert String into integer
         }
+        for(int z = 0; z < length; z++){
+            String value = Names[z].replaceAll("[^0-9A-Za-z]", "");
+            cNames[z] = value;
+            }
         //sort scores in ascending orders
         for(int pass = 1; pass < cScores.length; pass++){
             for(int i = 0; i < cScores.length - pass; i++){
@@ -475,19 +484,23 @@ public class Game2048 {
                     int hold = cScores[i];
                     cScores[i] = cScores[i+1];
                     cScores[i+1] = hold;
+                    
+                    String temp = cNames[i];
+                    cNames[i] = cNames[i+1];
+                    cNames[i+1] = temp;
                 }
             }
         }
         int rank = 1; 
         if(cScores.length<10){            
             for(int i = 0; i < cScores.length; i++){
-                System.out.println(rank+". " +cScores[i]);
+                System.out.printf("%d. %-10s%d\n",rank,cNames[i],cScores[i]);
                 rank++;
             }
         }    
         else
             for(int i = 0; i < 10; i++){
-                System.out.println(rank+". " +cScores[i]);
+                System.out.printf("%d. %-10s%d\n",rank,cNames[i],cScores[i]);
                 rank++;
             }
 
@@ -515,7 +528,8 @@ public class Game2048 {
     // to print score
     public void writeScore() throws IOException{
         try (BufferedWriter wr = new BufferedWriter(new FileWriter("High_Scores.txt",true))) {
-            //wr.write(name+" ");    
+            wr.write(playerName);
+            wr.write(" ");
             wr.write(String.valueOf(totalScore));                
             wr.newLine();
         }

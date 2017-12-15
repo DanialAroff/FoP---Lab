@@ -13,9 +13,9 @@ public class Main {
         g.createFile();
         g.displayHighScore();
         
-//        System.out.print("Player name : ");
-//        String name = game.nextLine();
-//        
+        System.out.print("Player name : ");
+        String name = game.nextLine();
+        g.setName(name);
         System.out.print("\nEnter the number of rows : ");
         int row = game.nextInt();
         System.out.print("Enter the number of columns : ");
