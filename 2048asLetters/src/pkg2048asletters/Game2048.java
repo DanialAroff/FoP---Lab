@@ -92,7 +92,7 @@ public class Game2048 {
         }
         else{
             display(gameBoard);
-            System.out.println("Can't undo");
+            System.out.println("Can't undo two times in a row");
         }
     }
     public void addTiles(){        
@@ -448,7 +448,7 @@ public class Game2048 {
     public void displayHighScore() throws FileNotFoundException, IOException{
         Scanner in = new Scanner(System.in);           
 
-        System.out.println("HIGH SCORES");            
+        System.out.println("*******HIGH SCORES*******");            
 
         Scanner sc = new Scanner(new File("High_Scores.txt"));
         LineNumberReader rd = new LineNumberReader(new FileReader("High_Scores.txt")); //untuk read brp banyak line yg ada dlm txt file

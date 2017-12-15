@@ -92,7 +92,7 @@ public class Main {
                        System.out.println("\nSCORES : "+g.getTotalScore());
                     }
                     default : {
-
+                        g.display(gameBoard);
                     }
                 }
             }
