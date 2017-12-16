@@ -98,9 +98,7 @@ public class Main {
             }
         }
         if(!g.win()){
-            System.out.println("You've lost....");
-            System.out.println("Final Score : " + g.getTotalScore());
-            g.writeScore();
+            g.lose();
         }
         
     }    

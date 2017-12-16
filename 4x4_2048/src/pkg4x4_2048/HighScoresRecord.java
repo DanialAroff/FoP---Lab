@@ -109,7 +109,7 @@ public class HighScoresRecord {
         }catch (IOException e){
             System.out.println("\nNumberFormatException");
         }catch (NullPointerException e){
-            System.out.println("No names");
+            System.out.println("\nNo names");
         }
     }
     

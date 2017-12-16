@@ -1,15 +1,11 @@
 
 package pkg2048asletters;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.LineNumberReader;
+import java.io.*;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Game2048 {
     private int numOfLetters;    
@@ -59,8 +55,7 @@ public class Game2048 {
                         fill++;
                     }
                 }
-                else{
-                    
+                else{              
                     System.out.print('-'+" ");
                     gameBoard[i][j] = '-';
                 }
@@ -272,39 +267,37 @@ public class Game2048 {
         display(gameBoard);
         undo = 1;
     }
-    
     public void moveDOWN(){
-        char down[][] = gameBoard;
         char temp;
         int length = gameBoard.length;
         for(int i = length-2; i >=0; i--){
             for(int j = 0; j < gameBoard[0].length; j++){
-                if(down[i][j] == '-'){
+                if(gameBoard[i][j] == '-'){
                     //
                 }
-                else if(down[i][j] == down[i+1][j]&&Character.isUpperCase(down[i][j])){
+                else if(gameBoard[i][j] == gameBoard[i+1][j]&&Character.isUpperCase(gameBoard[i][j])){
                     addScore(combinedScore(nextLetter(gameBoard[i][j])));
                     prevScore = combinedScore(nextLetter(gameBoard[i][j]));
-                    down[i][j] = nextLetter(down[i][j]);
-                    temp = down[i][j];
-                    down[i][j] = '-';
-                    down[i+1][j] = temp;
+                    gameBoard[i][j] = nextLetter(gameBoard[i][j]);
+                    temp = gameBoard[i][j];
+                    gameBoard[i][j] = '-';
+                    gameBoard[i+1][j] = temp;
                 }             
-                else if(down[i+1][j] == '-'&&Character.isUpperCase(down[i][j])){             
+                else if(gameBoard[i+1][j] == '-'&&Character.isUpperCase(gameBoard[i][j])){             
                     int check;
                     for(check = i; check < length-1; check++){
-                    if(down[check+1][j]=='-'){
-                            down[check+1][j] = down[check][j];
-                            down[check][j]= '-';
+                    if(gameBoard[check+1][j]=='-'){
+                            gameBoard[check+1][j] = gameBoard[check][j];
+                            gameBoard[check][j]= '-';
                         }
-                        else if(down[check+1][j] == down[check][j]){
+                        else if(gameBoard[check+1][j] == gameBoard[check][j]){
                             addScore(combinedScore(nextLetter(gameBoard[i][j])));
                             prevScore = combinedScore(nextLetter(gameBoard[i][j]));
-                            down[check+1][j] = nextLetter(down[check][j]);
-                            down[check][j] = '-';
+                            gameBoard[check+1][j] = nextLetter(gameBoard[check][j]);
+                            gameBoard[check][j] = '-';
                             break;
                         }    
-                        else if(down[check+1][j]!=down[check][j]&&Character.isUpperCase(down[check+1][j])){
+                        else if(gameBoard[check+1][j]!=gameBoard[check][j]&&Character.isUpperCase(gameBoard[check+1][j])){
                             break;
                         }
                     }
@@ -312,8 +305,7 @@ public class Game2048 {
             }
         }
         addTiles();
-        display(down);
-        gameBoard = down;
+        display(gameBoard);
         undo = 1;
     }
     public void moveLEFT(){
@@ -421,6 +413,15 @@ public class Game2048 {
         }
         return false;
     }
+    public void lose(){
+        System.out.println("\nYou've lost.....");
+        System.out.println("Final Score : " + getTotalScore());
+        try {
+            writeScore();
+        } catch (IOException ex) {
+            Logger.getLogger(Game2048.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public void display(char [][]d){
         for(int i = 0; i < d.length; i++){
             for(int j = 0; j < d[0].length; j++){
@@ -453,16 +454,14 @@ public class Game2048 {
         Scanner sc = new Scanner(new File("High_Scores.txt"));
         LineNumberReader rd = new LineNumberReader(new FileReader("High_Scores.txt")); //untuk read brp banyak line yg ada dlm txt file
 
-        int length;
         String read = "";
-        while((read = rd.readLine())!= null){                
-        }
+        while((read = rd.readLine())!= null){}
 
         int line = rd.getLineNumber();
-        length = rd.getLineNumber();
+        int length = rd.getLineNumber();
         cScores = new int[length];   
         Scores  = new String[length];
-        cNames = new String[length];
+        cNames = new String[length];  //collection of names
         Names = new String[length];
 
         for(int x = 0; x < Scores.length; x++){
