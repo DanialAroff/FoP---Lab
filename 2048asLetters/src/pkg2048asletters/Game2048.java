@@ -406,7 +406,7 @@ public class Game2048 {
     public boolean win(){
         for(int x = 0; x < gameBoard.length; x++){
             for(int y = 0; y < gameBoard[0].length; y++){
-                if(gameBoard[x][y] == 'K'){
+                if(gameBoard[x][y] == 'D'){
                     return true;
                 }
             }
@@ -433,14 +433,23 @@ public class Game2048 {
     public void setName(String name){
         playerName = name;
     }
+    //public void 
     //check if "High_Scores.txt" exist or not and if not new file will be created
     public void createFile(){
         try{
             File f = new File("High_Scores.txt");
-            if(f.isFile()){}
-            else{
+            BufferedWriter buff = new BufferedWriter(new FileWriter("High_Scores.txt",true));            
+            if(f.isFile()){
                 f.createNewFile();
+                for(int rank = 1; rank <= 10; rank++){       
+                    buff.write("Player");
+                    buff.write(" ");
+                    buff.write(String.valueOf(0));                
+                    buff.newLine();
+                }
             }
+            else;
+            buff.close();
         }catch(IOException e){
             System.out.println("Problem with output");
         }
@@ -493,16 +502,16 @@ public class Game2048 {
         int rank = 1; 
         if(cScores.length<10){            
             for(int i = 0; i < cScores.length; i++){
-                System.out.printf("%d. %-10s%d\n",rank,cNames[i],cScores[i]);
+                System.out.printf("%-3d %-10s%d\n",rank,cNames[i],cScores[i]);
                 rank++;
             }
         }    
         else
             for(int i = 0; i < 10; i++){
-                System.out.printf("%d. %-10s%d\n",rank,cNames[i],cScores[i]);
+                System.out.printf("%-3d %-10s%d\n",rank,cNames[i],cScores[i]);
                 rank++;
             }
-
+        System.out.println("*************************");
     }
     //add score in totalScore
     public void addScore(int score){

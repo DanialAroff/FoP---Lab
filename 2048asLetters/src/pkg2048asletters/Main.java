@@ -13,12 +13,20 @@ public class Main {
         g.createFile();
         g.displayHighScore();
         
-        System.out.print("Player name : ");
+        System.out.print("\nPlayer name : ");
         String name = game.nextLine();
         g.setName(name);
         System.out.print("\nEnter the number of rows : ");
+        while (!game.hasNextInt()){
+            System.out.println("Number, please!");
+            game.nextLine();
+        }
         int row = game.nextInt();
-        System.out.print("Enter the number of columns : ");
+        System.out.print("\nEnter the number of columns : ");
+        while (!game.hasNextInt()){
+            System.out.println("Number, please!");
+            game.nextLine();
+        }
         int column = game.nextInt();
         System.out.println("");
         
@@ -35,7 +43,11 @@ public class Main {
             else{
                 System.out.println("");
                 System.out.println("UP(1)   RIGHT(2)   DOWN(3)   LEFT (4)   UNDO (5)");
-                System.out.print("Input ");
+                System.out.print("----> ");
+                while (!game.hasNextInt()){
+                    System.out.println("Bad input! Numbers only");
+                    game.nextLine();
+                }
                 int direction = game.nextInt();
                 System.out.println("");
                 switch(direction){
