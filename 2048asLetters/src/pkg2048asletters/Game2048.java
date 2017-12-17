@@ -4,8 +4,6 @@ package pkg2048asletters;
 import java.io.*;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Game2048 {
     private int numOfLetters;    
@@ -418,8 +416,8 @@ public class Game2048 {
         System.out.println("Final Score : " + getTotalScore());
         try {
             writeScore();
-        } catch (IOException ex) {
-            Logger.getLogger(Game2048.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException e) {
+            //Logger.getLogger(Game2048.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public void display(char [][]d){
