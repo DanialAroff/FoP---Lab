@@ -42,7 +42,7 @@ public class Main {
             }
             else{
                 System.out.println("");
-                System.out.println("UP(1)   RIGHT(2)   DOWN(3)   LEFT (4)   UNDO (5)");
+                System.out.println("UP(1)   RIGHT(2)   DOWN(3)   LEFT (4)   UNDO (5)   REDO(6)");
                 System.out.print("----> ");
                 while (!game.hasNextInt()){
                     System.out.println("Bad input! Numbers only");
@@ -55,6 +55,7 @@ public class Main {
                         if(g.ifUP(gameBoard)>0){
                             g.record(gameBoard);
                             g.moveUP();
+                            g.recordR(gameBoard);
                             System.out.println("\nSCORES : "+g.getTotalScore());                    
                         }
                         else{
@@ -67,6 +68,7 @@ public class Main {
                         if(g.ifRIGHT(gameBoard)>0){
                             g.record(gameBoard);
                             g.moveRIGHT();
+                            g.recordR(gameBoard);
                             System.out.println("\nSCORES : "+g.getTotalScore());
                         }
                         else{
@@ -79,6 +81,7 @@ public class Main {
                         if(g.ifDOWN(gameBoard)>0){
                             g.record(gameBoard);
                             g.moveDOWN();
+                            g.recordR(gameBoard);
                             System.out.println("\nSCORES : "+g.getTotalScore());
                         }    
                         else{
@@ -90,7 +93,8 @@ public class Main {
                     case 4 : {
                         if(g.ifLEFT(gameBoard)>0){     
                             g.record(gameBoard);
-                            g.moveLEFT();      
+                            g.moveLEFT();     
+                            g.recordR(gameBoard);
                             System.out.println("\nSCORES : "+g.getTotalScore());
                         }    
                         else{
@@ -102,9 +106,16 @@ public class Main {
                     case 5 : {
                        g.undo();
                        System.out.println("\nSCORES : "+g.getTotalScore());
+                       break;
+                    }
+                    case 6 : {
+                        g.redo();
+                        System.out.println("\nSCORES : "+g.getTotalScore());
+                        break;
                     }
                     default : {
                         g.display(gameBoard);
+                        break;
                     }
                 }
             }

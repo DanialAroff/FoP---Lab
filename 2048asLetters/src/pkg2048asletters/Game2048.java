@@ -9,6 +9,8 @@ public class Game2048 {
     private int numOfLetters;    
     private char[][] gameBoard;  //
     private char[][] gameBoardX; //hold previous tiles position. used for UNDO
+    private char[][] gameBoardR;
+    private int redo;
     private int undo; 
     private int score;
     private int prevScore;
@@ -19,12 +21,17 @@ public class Game2048 {
     private String[] cNames;  //array of names
     private String playerName;
     
+    public Game2048(){
+       // redo = 0;
+    }
+    
     public void newGame(int row, int column){
         Random rnd = new Random();
         numOfLetters = (row * column) / 8;
         int randomTiles[] = new int[numOfLetters];
         gameBoard = new char[row][column];
         gameBoardX = new char[row][column];
+        gameBoardR = new char[row][column];
         
         for (int p = 0; p < numOfLetters; p++) {
             randomTiles[p] = rnd.nextInt(row * column);
@@ -72,20 +79,43 @@ public class Game2048 {
             }
         }
     }
+     public void recordR(char X[][]){
+        for(int x = 0; x < X.length; x++){
+            for(int y = 0; y < X[0].length; y++){
+                gameBoardR[x][y] = X[x][y];
+            }
+        }
+    }
     public void undo(){
         if(undo == 1){
             display(gameBoardX);
-            undo = 0;
+            undo = 0;           
             for(int x = 0; x < gameBoardX.length; x++){
                 for(int y = 0; y < gameBoardX[0].length; y++){
                     gameBoard[x][y] = gameBoardX[x][y];
                 }
             }
             totalScore = totalScore - prevScore;
+            redo = 1;
         }
         else{
             display(gameBoard);
             System.out.println("Can't undo two times in a row");
+        }
+    }
+    public void redo(){
+        if(redo == 1){
+            display(gameBoardR);          
+            for(int x = 0; x < gameBoardR.length; x++){
+                for(int y = 0; y < gameBoardR[0].length; y++){
+                    gameBoard[x][y] = gameBoardR[x][y];
+                }
+            }
+            redo = 0;
+        }
+        else{
+            display(gameBoard);
+            System.out.println("Can't redo two times in a row!");
         }
     }
     public void addTiles(){        
