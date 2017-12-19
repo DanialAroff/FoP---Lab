@@ -42,7 +42,7 @@ public class Main {
             }
             else{
                 System.out.println("");
-                System.out.println("UP(1)   RIGHT(2)   DOWN(3)   LEFT (4)   UNDO (5)   REDO(6)");
+                System.out.println("UP(1)   RIGHT(2)   DOWN(3)   LEFT (4)   UNDO (5)   REDO(6)  SURRENDER(7)");
                 System.out.print("----> ");
                 while (!game.hasNextInt()){
                     System.out.println("Bad input! Numbers only");
@@ -112,6 +112,12 @@ public class Main {
                         g.redo();
                         System.out.println("\nSCORES : "+g.getTotalScore());
                         break;
+                    }
+                    case 7 : {
+                        System.out.println("You've quit the game");
+                        System.out.println("\nSCORES : "+g.getTotalScore());
+                        g.writeScore();
+                        System.exit(0);
                     }
                     default : {
                         g.display(gameBoard);
