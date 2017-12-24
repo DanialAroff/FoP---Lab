@@ -7,20 +7,21 @@ public class Square extends Shape{
     
     public Square(){
         super();
-        super.getPerimeter();
-        super.getArea();
-        super.display();
+        super.name = "Square";
     }
     
     public void length(double length){
+        System.out.print("Length(cm) : ");
         this.length = length;
     }
     @Override
     public double getPerimeter(){
+        super.perimeter = length*4;
         return length*4;
     }
     @Override
     public double getArea(){
+        super.area = length*length;
         return length*length;
     }
     
