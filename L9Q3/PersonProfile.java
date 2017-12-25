@@ -71,6 +71,11 @@ class Student extends PersonProfile {
     }
     public void displayDetails(){
         for(int x = 0; x < 5; x++){
+//            System.out.println(cCodes[x]);
+//            System.out.println(cNames[x]);
+//            System.out.println(session[x]);
+//            System.out.println(semester[x]);
+//            System.out.println(mark[x]+"\n");
             String grade = getGrade(mark[x]);
             System.out.printf("%-13s %-38s %-12d %-8d %s\n",cCodes[x],cNames[x],session[x],semester[x],grade);
         }
