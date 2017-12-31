@@ -25,12 +25,6 @@ public class PersonProfile {
         System.out.printf("Gender : %s\n",gender);
         System.out.printf("Date of birth : %s\n",DoB);
         System.out.println("Course Name   Course Course                        Session    Semester    Grade");
-//        System.out.printf("");
-//        System.out.printf("");
-//        System.out.printf("");        
-        for(int x = 0; x < 5; x++){
-            //System.out.println(cNames+);
-        }
     }
 }
 
@@ -45,8 +39,6 @@ class Student extends PersonProfile {
     public Student() throws FileNotFoundException, IOException{
         Scanner in = new Scanner(new FileReader("course.txt"));
         LineNumberReader liner = new LineNumberReader(new FileReader("course.txt"));
-        
-        String fileName;
         
         String l = "";
         while((l = liner.readLine())!= null){         
@@ -66,8 +58,6 @@ class Student extends PersonProfile {
             semester[i] = Integer.parseInt(in.nextLine());
             mark[i] = Integer.parseInt(in.nextLine());
         }
-        
-        
     }
     public void displayDetails(){
         for(int x = 0; x < 5; x++){
