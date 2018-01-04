@@ -19,25 +19,32 @@ public class FinalExam2016Q2 {
         String name[] = new String[teams];
         int score[] = new int[teams];
         
-//        for(int x = 0; x < score.length; x++){
-//            System.out.println("Enter team "+(x+1)+" name : ");
-//            name[x] = in.nextLine();
-//        }
+        for(int x = 0; x < score.length; x++){
+            in.nextLine();
+            System.out.print("Enter team "+(x+1)+" name : ");
+            name[x] = in.nextLine();
+            System.out.print("Enter team "+(x+1)+" score : ");
+            score[x] = in.nextInt();
+        }
         
-//        for(int pass = 1; pass < teams; pass++){
-//            for(int i = 0; i < teams-1; i++){
-//                if(score[i]<score[i+1]){
-//                    int temp = score[i];
-//                    score[i] = score[i+1];
-//                    score[i+1] = temp;
-//                }
-//            }
-//        }
-        Arrays.sort(score);
+        for(int pass = 1; pass < teams; pass++){
+            for(int i = 0; i < teams-1; i++){
+                if(score[i]<score[i+1]){
+                    int temp = score[i];
+                    score[i] = score[i+1];
+                    score[i+1] = temp;
+                    
+                    String hold =  name[i];
+                    name[i] = name[i+1];
+                    name[i+1] = hold;
+                }
+            }
+        }
         System.out.println("List of team with the highest team score first");
         for(int x = 0; x < score.length; x++){
-            System.out.println(score[x]);
+            System.out.print(name[x]+" "+"("+score[x]+") | ");
         }
+        System.out.println("");
     }
     
 }
